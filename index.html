@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matter Apps</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #fafafa;
+            --bg-card: #ffffff;
+            --text: #1d1d1f;
+            --text-secondary: #6e6e73;
+            --text-tertiary: #86868b;
+            --border: #e8e8ed;
+            --accent: #0071e3;
+            --accent-hover: #0077ED;
+            --ghost-bg: #f5f5f7;
+            --radius: 20px;
+            --radius-sm: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+            font-size: 17px;
+        }
+
+        /* ── Navigation ── */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(250, 250, 250, 0.8);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        nav .nav-inner {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 24px;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-brand {
+            font-weight: 600;
+            font-size: 15px;
+            letter-spacing: -0.01em;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        /* ── Sections ── */
+        section {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ── Hero ── */
+        .hero {
+            padding-top: 160px;
+            padding-bottom: 120px;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-tertiary);
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-family: 'Instrument Serif', Georgia, serif;
+            font-weight: 400;
+            font-size: clamp(48px, 7vw, 80px);
+            letter-spacing: -0.03em;
+            line-height: 1.05;
+            color: var(--text);
+            margin-bottom: 24px;
+        }
+
+        .hero h1 em {
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        .hero p {
+            font-size: 19px;
+            color: var(--text-secondary);
+            max-width: 520px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ── Apps Grid ── */
+        .apps-section {
+            padding-bottom: 120px;
+        }
+
+        .apps-section .section-label {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-tertiary);
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            margin-bottom: 48px;
+            text-align: center;
+        }
+
+        .apps-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+        }
+
+        /* ── App Card ── */
+        .app-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 48px;
+            display: grid;
+            grid-template-columns: 96px 1fr;
+            gap: 40px;
+            align-items: start;
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+        }
+
+        .app-card:hover {
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.06);
+            transform: translateY(-2px);
+        }
+
+        .app-icon {
+            width: 96px;
+            height: 96px;
+            border-radius: 22px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .app-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .app-icon-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+        }
+
+        .app-icon-ghostmail {
+            background: #f5f5f7;
+        }
+
+        .app-icon-rezolution {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+        }
+
+        .app-icon-sudoku {
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+        }
+
+        .app-content h2 {
+            font-family: 'Instrument Serif', Georgia, serif;
+            font-weight: 400;
+            font-size: 32px;
+            letter-spacing: -0.02em;
+            margin-bottom: 4px;
+        }
+
+        .app-platform {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            margin-bottom: 16px;
+        }
+
+        .app-content p {
+            color: var(--text-secondary);
+            font-size: 16px;
+            line-height: 1.65;
+            margin-bottom: 20px;
+            max-width: 560px;
+        }
+
+        .app-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .feature-tag {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-tertiary);
+            background: var(--ghost-bg);
+            padding: 6px 14px;
+            border-radius: 100px;
+        }
+
+        /* ── Privacy & Support ── */
+        .info-section {
+            padding-bottom: 120px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .info-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 48px;
+        }
+
+        .info-card h3 {
+            font-family: 'Instrument Serif', Georgia, serif;
+            font-weight: 400;
+            font-size: 28px;
+            letter-spacing: -0.02em;
+            margin-bottom: 20px;
+        }
+
+        .info-card p,
+        .info-card li {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        .info-card ul {
+            list-style: none;
+            margin-top: 16px;
+        }
+
+        .info-card ul li {
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .info-card ul li:last-child {
+            border-bottom: none;
+        }
+
+        .info-card a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .info-card a:hover {
+            text-decoration: underline;
+        }
+
+        /* ── Privacy Policy Full ── */
+        .privacy-full {
+            padding-top: 120px;
+            padding-bottom: 120px;
+        }
+
+        .privacy-full h2 {
+            font-family: 'Instrument Serif', Georgia, serif;
+            font-weight: 400;
+            font-size: 40px;
+            letter-spacing: -0.02em;
+            margin-bottom: 12px;
+        }
+
+        .privacy-full .updated {
+            font-size: 14px;
+            color: var(--text-tertiary);
+            margin-bottom: 48px;
+        }
+
+        .privacy-full h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-top: 36px;
+            margin-bottom: 12px;
+            color: var(--text);
+        }
+
+        .privacy-full p {
+            color: var(--text-secondary);
+            font-size: 16px;
+            line-height: 1.7;
+            margin-bottom: 16px;
+            max-width: 680px;
+        }
+
+        .privacy-full ul {
+            list-style: none;
+            margin-bottom: 16px;
+            max-width: 680px;
+        }
+
+        .privacy-full ul li {
+            color: var(--text-secondary);
+            font-size: 16px;
+            line-height: 1.7;
+            padding-left: 20px;
+            position: relative;
+            margin-bottom: 4px;
+        }
+
+        .privacy-full ul li::before {
+            content: '·';
+            position: absolute;
+            left: 4px;
+            color: var(--text-tertiary);
+            font-weight: 700;
+        }
+
+        /* ── Footer ── */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 32px 0;
+        }
+
+        footer .footer-inner {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        footer p {
+            font-size: 13px;
+            color: var(--text-tertiary);
+        }
+
+        footer a {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: var(--text);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 768px) {
+            .hero {
+                padding-top: 120px;
+                padding-bottom: 80px;
+            }
+
+            .app-card {
+                grid-template-columns: 1fr;
+                gap: 24px;
+                padding: 32px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                gap: 20px;
+            }
+
+            footer .footer-inner {
+                flex-direction: column;
+                gap: 12px;
+                text-align: center;
+            }
+        }
+
+        /* ── Page transitions ── */
+        .page { display: none; }
+        .page.active { display: block; }
+
+        /* ── Fade-in animation ── */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── Ghost SVG icon for card ── */
+        .ghost-svg {
+            width: 96px;
+            height: 96px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+    <div class="nav-inner">
+        <a href="#" class="nav-brand" onclick="showPage('home')">Matter Apps</a>
+        <ul class="nav-links">
+            <li><a href="#apps" onclick="showPage('home')">Apps</a></li>
+            <li><a href="#" onclick="showPage('privacy')">Privacy</a></li>
+            <li><a href="#support" onclick="showPage('home')">Support</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- ═══════════ HOME PAGE ═══════════ -->
+<div id="page-home" class="page active">
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-badge">Independent Mac & Mobile Apps</div>
+        <h1>Software that<br>stays <em>out of the way</em></h1>
+        <p>Small, focused apps built to solve one thing well. No accounts, no tracking, no clutter.</p>
+    </section>
+
+    <!-- Apps -->
+    <section class="apps-section" id="apps">
+        <div class="section-label">Our Apps</div>
+        <div class="apps-grid">
+
+            <!-- Ghostmail -->
+            <div class="app-card fade-up">
+                <div class="app-icon app-icon-ghostmail">
+                    <svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="96" height="96" rx="22" fill="#f5f5f7"/>
+                        <path d="M48 22C35 22 26 32 26 44v22l6-6 6 6 6-6 6 6 6-6 6 6 6-6 6 6V44c0-12-9-22-22-22z" fill="#1d1d1f"/>
+                        <circle cx="40" cy="42" r="4" fill="#f5f5f7"/>
+                        <circle cx="56" cy="42" r="4" fill="#f5f5f7"/>
+                    </svg>
+                </div>
+                <div class="app-content">
+                    <h2>Ghostmail</h2>
+                    <div class="app-platform">macOS</div>
+                    <p>A stealth email notifier that lives in your menu bar. The icon appears when you have unread mail and vanishes completely when your inbox is clear. Click to read, reply, and compose — all from a lightweight floating panel. No dock icon, no distractions.</p>
+                    <div class="app-features">
+                        <span class="feature-tag">Menu Bar</span>
+                        <span class="feature-tag">IMAP & OAuth</span>
+                        <span class="feature-tag">Encrypted Storage</span>
+                        <span class="feature-tag">Multiple Accounts</span>
+                        <span class="feature-tag">Mark as Seen</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rezolution -->
+            <div class="app-card fade-up">
+                <div class="app-icon app-icon-rezolution">
+                    <svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="96" height="96" rx="22" fill="#1a1a2e"/>
+                        <rect x="20" y="28" width="56" height="36" rx="4" stroke="#64748b" stroke-width="2.5" fill="none"/>
+                        <rect x="20" y="28" width="34" height="36" rx="4" fill="#3b82f6" opacity="0.25"/>
+                        <line x1="54" y1="28" x2="54" y2="64" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="3 2"/>
+                        <rect x="38" y="64" width="20" height="3" rx="1.5" fill="#64748b"/>
+                    </svg>
+                </div>
+                <div class="app-content">
+                    <h2>Rezolution</h2>
+                    <div class="app-platform">macOS</div>
+                    <p>Switch display resolutions in a single click from the menu bar. Designed for presenters who need to quickly change an ultrawide monitor to 4:3 for screen sharing. Five configurable quick-switch slots with a global safety hotkey to instantly revert to native.</p>
+                    <div class="app-features">
+                        <span class="feature-tag">Menu Bar</span>
+                        <span class="feature-tag">Quick Slots</span>
+                        <span class="feature-tag">Ultrawide Support</span>
+                        <span class="feature-tag">Safety Hotkey</span>
+                        <span class="feature-tag">Zero Config</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sudoku -->
+            <div class="app-card fade-up">
+                <div class="app-icon app-icon-sudoku">
+                    <svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="96" height="96" rx="22" fill="#f0f1f3"/>
+                        <g transform="translate(22, 22)">
+                            <rect width="52" height="52" rx="6" fill="white" stroke="#cbd5e1" stroke-width="1.5"/>
+                            <line x1="17.3" y1="0" x2="17.3" y2="52" stroke="#e2e8f0" stroke-width="0.75"/>
+                            <line x1="34.6" y1="0" x2="34.6" y2="52" stroke="#e2e8f0" stroke-width="0.75"/>
+                            <line x1="0" y1="17.3" x2="52" y2="17.3" stroke="#e2e8f0" stroke-width="0.75"/>
+                            <line x1="0" y1="34.6" x2="52" y2="34.6" stroke="#e2e8f0" stroke-width="0.75"/>
+                            <text x="8" y="13" font-family="DM Sans, sans-serif" font-size="11" fill="#334155" font-weight="500">5</text>
+                            <text x="25" y="13" font-family="DM Sans, sans-serif" font-size="11" fill="#334155" font-weight="500">3</text>
+                            <text x="8" y="30" font-family="DM Sans, sans-serif" font-size="11" fill="#334155" font-weight="500">6</text>
+                            <text x="42" y="30" font-family="DM Sans, sans-serif" font-size="11" fill="#94a3b8" font-weight="400">5</text>
+                            <text x="25" y="47" font-family="DM Sans, sans-serif" font-size="11" fill="#3b82f6" font-weight="600">9</text>
+                            <text x="42" y="47" font-family="DM Sans, sans-serif" font-size="11" fill="#334155" font-weight="500">8</text>
+                        </g>
+                    </svg>
+                </div>
+                <div class="app-content">
+                    <h2>Sudoku</h2>
+                    <div class="app-platform">iOS & Android</div>
+                    <p>A learning-focused Sudoku app that watches how you play and teaches you to improve. An intelligent engine tracks hesitation patterns, detects missed techniques, and delivers one actionable insight after each game. Progress from naked singles to X-Wings.</p>
+                    <div class="app-features">
+                        <span class="feature-tag">Learning Engine</span>
+                        <span class="feature-tag">Technique Tracking</span>
+                        <span class="feature-tag">Weekly Challenges</span>
+                        <span class="feature-tag">Friends & Leaderboards</span>
+                        <span class="feature-tag">Offline Play</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Support & Privacy Cards -->
+    <section class="info-section" id="support">
+        <div class="info-grid">
+            <div class="info-card fade-up">
+                <h3>Support</h3>
+                <p>Need help with one of our apps? We're a small team and respond to every message.</p>
+                <ul>
+                    <li>Email: <a href="mailto:support@matterapps.com">support@matterapps.com</a></li>
+                    <li>Response time: within 48 hours</li>
+                    <li>Bug reports welcome — they help us improve</li>
+                </ul>
+            </div>
+            <div class="info-card fade-up">
+                <h3>Privacy</h3>
+                <p>We believe privacy is a feature. Our apps are designed to work without collecting your personal data.</p>
+                <p style="margin-top: 12px;">
+                    <a href="#" onclick="showPage('privacy'); return false;">Read our full Privacy Policy →</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<!-- ═══════════ PRIVACY PAGE ═══════════ -->
+<div id="page-privacy" class="page">
+    <section class="privacy-full">
+        <h2>Privacy Policy</h2>
+        <p class="updated">Last updated: February 2026</p>
+
+        <p>Matter Apps builds software that respects your privacy by design. This policy covers all apps published by Matter Apps on the Apple App Store and Mac App Store.</p>
+
+        <h3>Our Approach</h3>
+        <p>We follow a simple principle: collect nothing unless absolutely necessary for the app to function. Most of our apps work entirely on your device with no data leaving your computer or phone.</p>
+
+        <h3>Ghostmail</h3>
+        <p>Ghostmail connects directly to your email server via IMAP and SMTP. Your email credentials are encrypted locally using AES-256-GCM and stored only on your device. We never see, store, or transmit your credentials or email content. No analytics, no tracking, no server-side components.</p>
+
+        <h3>Rezolution</h3>
+        <p>Rezolution operates entirely offline. It reads your display's supported resolutions using macOS system APIs and stores your preferences locally via UserDefaults. No data is collected, transmitted, or stored externally. The app requires no network access.</p>
+
+        <h3>Sudoku</h3>
+        <p>The Sudoku app uses anonymous identifiers to enable social features such as leaderboards and friend challenges. We collect:</p>
+        <ul>
+            <li>A randomly generated device identifier (not linked to your Apple ID)</li>
+            <li>Gameplay statistics (solve times, difficulty, techniques used)</li>
+            <li>An optional display name you choose</li>
+        </ul>
+        <p>We do not collect your name, email address, location, or any information that identifies you personally. Game data is stored in Supabase (hosted on AWS) and can be deleted upon request.</p>
+
+        <h3>Third-Party Services</h3>
+        <p>Ghostmail and Rezolution use no third-party services. The Sudoku app uses Supabase for backend services (database and authentication). No data is shared with advertisers or data brokers. We do not display ads in any of our apps.</p>
+
+        <h3>Data Retention</h3>
+        <p>For Ghostmail and Rezolution, all data lives on your device and is removed when you uninstall the app. For the Sudoku app, account data is retained until you request deletion or delete your account within the app.</p>
+
+        <h3>Children's Privacy</h3>
+        <p>Our apps do not knowingly collect personal information from children under 13. The Sudoku app's anonymous auth system does not require any personal information.</p>
+
+        <h3>Changes</h3>
+        <p>We may update this policy from time to time. Significant changes will be noted in app update release notes.</p>
+
+        <h3>Contact</h3>
+        <p>Questions about this policy? Reach us at <a href="mailto:privacy@matterapps.com" style="color: var(--accent); text-decoration: none;">privacy@matterapps.com</a></p>
+
+        <p style="margin-top: 48px;"><a href="#" onclick="showPage('home'); return false;" style="color: var(--accent); text-decoration: none;">← Back to home</a></p>
+
+        <p style="margin-top: 24px; font-size: 13px; color: var(--text-tertiary);">&copy; 2025 Matter ApS. All rights reserved.</p>
+    </section>
+</div>
+
+<!-- Footer -->
+<footer>
+    <div class="footer-inner">
+        <p>&copy; 2025 Matter ApS. All rights reserved.</p>
+        <div class="footer-links">
+            <a href="#" onclick="showPage('privacy')">Privacy Policy</a>
+            <a href="mailto:support@matterapps.com">Contact</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Page switching
+    function showPage(page) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById('page-' + page).classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Scroll-triggered fade-in
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    // Handle hash navigation
+    if (window.location.hash === '#privacy') showPage('privacy');
+</script>
+
+</body>
+</html>
